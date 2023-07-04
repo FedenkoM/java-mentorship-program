@@ -9,6 +9,7 @@ import org.spring.data.access.repository.EventRepository;
 import org.spring.data.access.repository.TicketRepository;
 import org.spring.data.access.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class TicketService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
 
+    @Transactional
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         if (userRepository.findById(userId).isPresent() && eventRepository.findById(eventId).isPresent()) {
             if (ticketRepository.isTicketExistByUserIdAndEventId(userId, eventId)) {

@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -28,10 +29,12 @@ public class UserService {
         return userRepository.findByName(name, pageable);
     }
 
+    @Transactional
     public User createUser(User user) {
         return userRepository.save(user);
     }
 
+    @Transactional
     public User updateUser(User user) {
         var existingUser = userRepository.findById(user.getId()).orElseThrow();
         BeanUtils.copyProperties(user, existingUser, "id");

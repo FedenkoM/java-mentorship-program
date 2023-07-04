@@ -7,6 +7,7 @@ import org.spring.data.access.model.UserAccount;
 import org.spring.data.access.repository.UserAccountRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -18,6 +19,7 @@ public class UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
 
+    @Transactional
     public UserAccount create(UserAccount userAccount) {
         if (Objects.isNull(userAccount)) {
             log.info("User account in null");
@@ -49,6 +51,7 @@ public class UserAccountService {
         return userAccountRepository.deleteByUserId(userId);
     }
 
+    @Transactional
     public UserAccount withdraw(long userId, BigDecimal amount) {
         if (Objects.isNull(amount) || amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Amount is null or less then zero!");
